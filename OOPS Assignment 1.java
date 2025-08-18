@@ -1,79 +1,45 @@
-abstract class SmartDevice {
-    String name;
-    boolean status;
+import java.util.Scanner;
 
-    SmartDevice(String name) {
-        this.name = name;
-        this.status = false;
+class Book {
+    private String title;
+    private String author;
+
+    Book(String title, String author) {
+        this.title = title;
+        this.author = author;
     }
 
-    abstract void turnOn();
-    abstract void turnOff();
-
-    public void showStatus() {
-        System.out.println(name + " is " + (status ? "ON" : "OFF"));
+    public String getAuthor() {
+        return author;
     }
 
-    @Override
-    protected void finalize() {
-        System.out.println(name + " cleaned up.");
-    }
-}
-
-class Light extends SmartDevice {
-    Light(String name) {
-        super(name);
+    public void setAuthor(String newAuthor) {
+        System.out.println("Updating author from " + this.author + " to " + newAuthor);
+        this.author = newAuthor;
     }
 
-    @Override
-    void turnOn() {
-        status = true;
-        System.out.println(name + " Light ON");
-    }
-
-    @Override
-    void turnOff() {
-        status = false;
-        System.out.println(name + " Light OFF");
+    public void display() {
+        System.out.println("Title: " + title + ", Author: " + author);
     }
 }
 
-class Fan extends SmartDevice {
-    Fan(String name) {
-        super(name);
-    }
-
-    @Override
-    void turnOn() {
-        status = true;
-        System.out.println(name + " Fan ON");
-    }
-
-    @Override
-    void turnOff() {
-        status = false;
-        System.out.println(name + " Fan OFF");
-    }
-}
-
-public class Main {
+public class Hello {
     public static void main(String[] args) {
-        SmartDevice light = new Light("Bedroom");
-        SmartDevice fan = new Fan("Hall");
+        Scanner sc = new Scanner(System.in);
 
-        light.turnOn();
-        fan.turnOn();
+        Book book1 = new Book("Java Programming", "James Gosling");
 
-        light.showStatus();
-        fan.showStatus();
+        System.out.println("Before Update:");
+        book1.display();
 
-        light.turnOff();
-        fan.turnOff();
+        System.out.print("\nEnter new author name: ");
+        String newAuthor = sc.nextLine();
 
-        light = null;
-        fan = null;
-        System.gc();
+        book1.setAuthor(newAuthor);
 
-        System.out.println("Simulation Complete.");
+        System.out.println("\nAfter Update:");
+        book1.display();
+
+        sc.close();
     }
 }
